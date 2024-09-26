@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras de Pan</title>
+    <style>
+        /* Estilo general de la página */
+        body {
+            font-family: 'Arial', sans-serif; /* Define la fuente */
+            background-color: #f5e1c0; /* Color de fondo */
+            color: #5d3a2e; /* Color del texto */
+            margin: 0; /* Sin márgenes */
+            padding: 20px; /* Espacio alrededor del contenido */
+        }
+
+        h1 {
+            text-align: center; /* Centra el título */
+            color: #b85c38; /* Color del título */
+        }
+
+        input[type="text"] {
+            padding: 10px; /* Espacio dentro del campo */
+            width: 70%; /* Ancho del campo */
+            border: 2px solid #b85c38; /* Borde del campo */
+            border-radius: 5px; /* Bordes redondeados */
+            margin-right: 10px; /* Espacio a la derecha */
+        }
+
+        button {
+            padding: 10px 15px; /* Espacio dentro del botón */
+            background-color: #b85c38; /* Color del botón */
+            color: white; /* Color del texto del botón */
+            border: none; /* Sin borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+            transition: background-color 0.3s; /* Efecto al pasar el ratón */
+        }
+
+        button:hover {
+            background-color: #9e4f2b; /* Color más oscuro al pasar el ratón */
+        }
+
+        ul {
+            list-style-type: none; /* Sin viñetas en la lista */
+            padding: 0; /* Sin espacio extra */
+        }
+
+        li {
+            background-color: #ffffff; /* Fondo blanco para cada ítem */
+            margin: 10px 0; /* Espacio entre ítems */
+            padding: 10px; /* Espacio dentro de cada ítem */
+            border-radius: 5px; /* Bordes redondeados */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            display: flex; /* Alinear ítems en línea */
+            justify-content: space-between; /* Espacio entre texto y botones */
+            align-items: center; /* Alinear verticalmente */
+        }
+
+        li button {
+            margin-left: 10px; /* Espacio entre el botón y el texto del ítem */
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Compras de Pan :D</h1> <!-- Título principal de la página -->
+    <input type="text" id="nuevoItem" placeholder="Agregar nuevo pan"> <!-- Campo para ingresar nuevo pan -->
+    <button onclick="crearItem()">Agregar</button> <!-- Botón para añadir el nuevo pan -->
+    <ul id="listaCompras"></ul> <!-- Lista donde se mostrarán los panes -->
+
+    <script>
+        // Inicializamos la lista de panes
+        let listaCompras = [
+            "Pan de trigo"
+            
+        ];
+
+        // Función que muestra la lista de panes en la pantalla
+        function mostrarLista() {
+            const listaElement = document.getElementById('listaCompras'); // Obtiene la lista
+            listaElement.innerHTML = ''; // Limpia la lista antes de llenarla
+            listaCompras.forEach((item, index) => {
+                // Añade cada ítem a la lista con botones para editar y eliminar
+                listaElement.innerHTML += `
+                    <li>
+                        ${item} 
+                        <button onclick="actualizarItem(${index})">Editar</button> <!-- Cambiado a "Editar" -->
+                        <button onclick="eliminarItem(${index})">Eliminar</button>
+                    </li>`;
+            });
+        }
+
+        // Función para agregar un nuevo ítem a la lista
+        function crearItem() {
+            const nuevoItem = document.getElementById('nuevoItem').value; // Obtiene el texto del input
+            if (nuevoItem) { // Solo si hay algo escrito
+                listaCompras.push(nuevoItem); // Agrega el nuevo pan
+                document.getElementById('nuevoItem').value = ''; // Limpia el campo de texto
+                mostrarLista(); // Muestra la lista actualizada
+            }
+        }
+
+        // Función para editar un ítem existente en la lista
+        function actualizarItem(index) {
+            const nuevoValor = prompt("Ingrese el nuevo valor:", listaCompras[index]); // Pide un nuevo valor
+            if (nuevoValor) { // Si se ingresa un nuevo valor
+                listaCompras[index] = nuevoValor; // Actualiza el ítem
+                mostrarLista(); // Muestra la lista actualizada
+            }
+        }
+
+        // Función para eliminar un ítem de la lista
+        function eliminarItem(index) {
+            if (confirm("¿Estás seguro de que quieres eliminar este ítem?")) { // Confirma la eliminación
+                listaCompras.splice(index, 1); // Elimina el ítem
+                mostrarLista(); // Muestra la lista actualizada
+            }
+        }
+
+        // Al cargar la página, mostramos la lista inicial
+        mostrarLista();
+    </script>
+</body>
+</html>
